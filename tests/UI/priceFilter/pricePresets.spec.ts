@@ -6,23 +6,11 @@ import { PriceHelper } from '../../../src/helpers/priceHelper.js';
 import { categoryData } from '../../../src/data/categoryData.js';
 
 /**
- * Records preset-suite results from the saved desktop run on November 12, 2026: 1 passed, 3 failed.
- * Tests check displayed current prices against inclusive bounds derived from each selected preset
- * or the UI-derived manual range. Amounts and product names below describe that run, not fixed inputs.
- *
- * Recorded failures:
- * - WEB-00011: preset 100–250 returned current UI prices 266 (Tesori Byzantium) and 357 (Pani Walewska Classic).
- *   Presets below 50 and 50–100 passed their checks; subsequent presets were not reached.
- * - WEB-00012: the first preset below 50 passed, but after switching to manual range 849–8354,
- *   Tiziana Terenzi Kirke had current UI price 10473, exceeding the selected maximum.
- * - WEB-00013: the initial manual range 849–8354 failed on the same 10473 price before the open-ended
- *   preset was read or selected. This run therefore did not verify the manual-to-preset transition.
- * WEB-00014, which applies and resets the first preset, passed.
- *
- * Catalog requests returned HTTP 200; the out-of-range API price.current/defaultVariant prices matched UI.
- * Kirke has a conditional multi-item discount, so the filter's pricing contract needs product clarification.
- * These are candidate contract mismatches under the current displayed-price checks.
- * Diagnosis used saved traces, screenshots and the HTML report; no new live run or mobile verification was performed.
+ * Earlier desktop run (2026-11-12): 1 passed, 3 failed.
+ * WEB-00011: preset 100–250 returned prices 266 and 357; later presets were not reached.
+ * WEB-00012: manual range 849–8354 returned price 10473 after the first preset passed.
+ * WEB-00013: the same initial-range failure blocked open-ended preset selection.
+ * WEB-00014 passed. Pricing semantics need clarification; mobile was not reviewed.
  */
 for (const testPlatform of testPlatforms) {
   test.describe(

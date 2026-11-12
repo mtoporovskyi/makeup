@@ -7,22 +7,10 @@ import { PriceHelper } from '../../../src/helpers/priceHelper.js';
 import { categoryData } from '../../../src/data/categoryData.js';
 
 /**
- * Records failures from the saved desktop run on November 12, 2026: 5 passed and 4 failed.
- * These scenarios expect nonempty results whose displayed current prices satisfy the committed bound.
- * Amounts and product names below describe that run; they are not fixed test inputs.
- *
- * Recorded failures:
- * - WEB-00019 (keyboard max): current UI price 10473 exceeded the selected maximum of 8354.
- * - WEB-00020 (clipboard max): current UI price 10473 exceeded the selected maximum of 8354.
- * - WEB-00021 (leading zeros in max): input "0008354" committed max 8354, but current UI price was 10473.
- * - WEB-00022 (spaces around max): input " 8354 " committed max 8354, but current UI price was 10473.
- *
- * All four failures involved Tiziana Terenzi Kirke after a successful HTTP 200 catalog response with
- * priceTo=8354. The API product price.current and defaultVariant.price.current were also 10473.
- * The product has a conditional multi-item discount, so its inclusion needs product clarification;
- * these are candidate price-filter contract mismatches. Tests continue checking displayed current prices.
- * WEB-00015 through WEB-00018 and WEB-00023 passed. Mobile outcomes were absent from the inspected report.
- * Diagnosis used saved traces and screenshots; no new live run was performed for this comment.
+ * Earlier desktop run (2026-11-12): 5 passed, 4 failed.
+ * WEB-00019–00022: Kirke current UI/API price 10473 exceeded max 8354.
+ * WEB-00015–00018 and WEB-00023 passed; mobile was not reviewed.
+ * Conditional-discount pricing needs product clarification.
  */
 const priceInputCases: readonly PriceInputTestCase[] = [
   {

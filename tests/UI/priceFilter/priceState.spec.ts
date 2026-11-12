@@ -6,20 +6,9 @@ import { PriceHelper } from '../../../src/helpers/priceHelper.js';
 import { categoryData } from '../../../src/data/categoryData.js';
 
 /**
- * Records state-suite results from the saved desktop run on November 12, 2026: 1 passed, 1 failed.
- * Amounts and product names below describe that run and are not fixed test inputs.
- *
- * Recorded failures:
- * - WEB-00002: after applying the initial range 849–8354, Tiziana Terenzi Kirke had current UI price 10473.
- *   The initial assertPrices check failed because that price exceeded the selected maximum.
- *   Initial input-field checks, the replacement-range precondition and the range replacement were not reached.
- *   This failure does not establish whether replacing an applied range works.
- * WEB-00001 (empty initial fields and finite, nonnegative current product prices) passed.
- *
- * The catalog request committed both bounds and returned HTTP 200;
- * API price.current and defaultVariant.price.current were also 10473.
- * The filter's pricing contract needs product clarification, as noted in the other range-failure summaries.
- * Diagnosis used saved traces, screenshots and the HTML report; no new live run or mobile verification was performed.
+ * Earlier desktop run (2026-11-12): 1 passed, 1 failed.
+ * WEB-00002: initial range 849–8354 returned Kirke price 10473; range replacement was not reached.
+ * WEB-00001 passed. Pricing semantics need clarification; mobile was not reviewed.
  */
 for (const testPlatform of testPlatforms) {
   test.describe(

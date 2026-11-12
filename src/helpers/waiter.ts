@@ -87,8 +87,6 @@ export class Waiter {
             'Active price tag must be removed when both price bounds are cleared',
           ).toHaveCount(0),
     ]);
-    // Wait for the committed filter before checking loading: old cards remain in the DOM
-    // under the skeleton while the new results load.
     await this.waitForLoadingToFinish();
   }
 

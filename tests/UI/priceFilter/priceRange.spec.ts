@@ -6,20 +6,10 @@ import { PriceHelper } from '../../../src/helpers/priceHelper.js';
 import { categoryData } from '../../../src/data/categoryData.js';
 
 /**
- * Records range-suite results from the saved desktop run on November 12, 2026: 2 passed, 2 failed.
- * Tests require nonempty main results and every displayed current price within the inclusive UI-derived bounds.
- * Amounts and product names below describe that run and are not fixed test inputs.
- *
- * Recorded failures:
- * - WEB-00004: after applying only max 8354, Tiziana Terenzi Kirke had current UI price 10473.
- * - WEB-00005: after applying min 849 and max 8354, the same current UI price 10473 exceeded the maximum.
- * Both cases committed the requested bounds and failed at assertPrices before the final input-field checks.
- * WEB-00003 (minimum only) and WEB-00006 (equal bounds and inclusive-price matching) passed.
- *
- * Catalog requests returned HTTP 200; API price.current and defaultVariant.price.current were also 10473.
- * Kirke has a conditional multi-item discount, so the filter's pricing contract needs product clarification.
- * These are candidate contract mismatches under the current displayed-price checks.
- * Diagnosis used saved traces, screenshots and the HTML report; no new live run or mobile verification was performed.
+ * Earlier desktop run (2026-11-12): 2 passed, 2 failed.
+ * WEB-00004 and WEB-00005: Kirke price 10473 exceeded max 8354; final field checks were not reached.
+ * WEB-00003 and WEB-00006 passed. API current prices matched UI.
+ * Conditional-discount pricing needs clarification; mobile was not reviewed.
  */
 for (const testPlatform of testPlatforms) {
   test.describe(

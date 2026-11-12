@@ -21,7 +21,6 @@ export class PriceSorting {
     const desktopSortingMenu = results.locator('.SortingMenu__sorting');
     this.desktopSortingButton = desktopSortingMenu.locator('.SortingMenu__button');
     this.mobileSortingButton = page.getByRole('main').getByRole('button', { name: /Сортування$/u });
-    // The application provides a stable ID but no dialog role for this sheet.
     this.mobilePanel = page.locator('#SortingList');
     this.mobileCloseButton = this.mobilePanel.getByRole('button', {
       name: 'makeup-close-light-outline',

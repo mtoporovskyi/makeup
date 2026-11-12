@@ -7,18 +7,10 @@ import { PriceHelper } from '../../../src/helpers/priceHelper.js';
 import { categoryData } from '../../../src/data/categoryData.js';
 
 /**
- * Records inverted-range failures from the saved desktop run on November 12, 2026: 0 passed, 2 failed.
- * These scenarios use explicit fill() followed by blur; keyboard and clipboard behavior was not verified.
- * The proposed contract requires clearing the edited boundary when min exceeds max, preserving the
- * other boundary and category results. This rejection rule still needs product confirmation.
- *
- * Recorded failures (amounts describe that run and are not fixed test inputs):
- * - WEB-00040: min 8354 was selected before entering max 849. The max field retained "849" instead of clearing.
- * - WEB-00041: max 849 was selected before entering min 8354. The min field retained "8354" instead of clearing.
- * Both requests sent priceFrom=8354 and priceTo=849; the catalog API returned HTTP 200.
- * The UI retained both inverted bounds and displayed results. Tests stopped at assertRejectedInput,
- * so subsequent selection, product-price and valid-input recovery checks were not reached.
- * Findings come from saved traces and screenshots; no new live run or mobile verification was performed.
+ * Earlier desktop run (2026-11-12): 0 passed, 2 failed after fill() and blur.
+ * WEB-00040 retained max 849 below min 8354; WEB-00041 retained min 8354 above max 849.
+ * API returned HTTP 200; tests stopped before price/recovery checks.
+ * Clearing the edited inverted bound remains a proposed requirement; mobile was not reviewed.
  */
 const invertedPriceCases: readonly PriceFieldTestCase[] = [
   {

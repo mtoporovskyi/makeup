@@ -10,24 +10,11 @@ import { testPlatforms } from '../../../src/data/testPlatforms.js';
 import type { PriceSortOption } from '../../../src/interfaces/catalog.js';
 
 /**
- * Records sorting-suite results from the saved desktop run on November 12, 2026: 0 passed, 2 failed.
- * Both cases applied the UI-derived range 2240–2407 and failed on current prices in the first UI page.
- * Amounts and product names below describe that run and are not fixed test inputs.
- *
- * Recorded failures:
- * - WEB-00042 (ascending): Shiseido Ginza Night Eau De Parfum Intense cost 1898,
- *   La Sultane de Saba Malaisie Champaka Fleurs Tropicales cost 2507,
- *   and Sol de Janeiro Cheirosa '59 cost 1510; all three prices were outside the selected range.
- * - WEB-00043 (descending): Rabanne Fame Intense cost 3238, above the selected maximum 2407.
- *
- * Catalog requests retained the selected bounds and sort and returned HTTP 200.
- * Both cases fetched all 14 pages (498 items, perPage 36, offsets 0–468) and passed complete-coverage checks.
- * The first-page API price.current and defaultVariant.price.current matched the reported out-of-range UI prices.
- * First-page ordering, UI/response matching, selected controls, per-page query/API-price assertions
- * and global ordering were not reached after the first-page assertPrices failure.
- * These are candidate pricing-contract mismatches; variant/discount semantics need product clarification.
- * This run does not establish whether ascending or descending current-price ordering is correct.
- * Diagnosis used saved traces, screenshots and the HTML report; no new live run or mobile verification was performed.
+ * Earlier desktop run (2026-11-12): 0 passed, 2 failed for range 2240–2407.
+ * WEB-00042: first-page UI prices 1898, 2507 and 1510 were outside the range.
+ * WEB-00043: first-page UI price 3238 exceeded max 2407.
+ * Both passed coverage checks for 14 pages/498 items; ordering and UI/API matching were not reached.
+ * API current prices matched the outliers. Pricing semantics need clarification; mobile was not reviewed.
  */
 const priceSortOptions = [
   {

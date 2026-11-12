@@ -6,22 +6,10 @@ import { PriceHelper } from '../../../src/helpers/priceHelper.js';
 import { categoryData } from '../../../src/data/categoryData.js';
 
 /**
- * Records reset-suite results from the saved desktop run on November 12, 2026: 0 passed, 4 failed.
- * All cases failed at assertPrices for the initial UI-derived range 849–8354:
- * Tiziana Terenzi Kirke had displayed current price 10473, above the selected maximum.
- * Amounts and product names below describe that run and are not fixed test inputs.
- *
- * Recorded failures:
- * - WEB-00007: the initial range check failed before resetPriceFilter() was called.
- * - WEB-00008: the initial range check failed before clearing both fields.
- * - WEB-00009: the initial range check failed before clearing min and checking preservation of max.
- * - WEB-00010: the initial range check failed before clearing max and checking preservation of min.
- * Reset/clearing actions and their subsequent result/field checks were not reached.
- * These failures do not establish whether reset or individual-bound clearing works.
- *
- * Catalog requests returned HTTP 200; API price.current and defaultVariant.price.current were also 10473.
- * The filter's pricing contract needs product clarification, as noted in the other range-failure summaries.
- * Diagnosis used saved traces, screenshots and the HTML report; no new live run or mobile verification was performed.
+ * Earlier desktop run (2026-11-12): 0 passed, 4 failed.
+ * WEB-00007–00010: initial range 849–8354 returned Kirke price 10473.
+ * All failed before reset/clearing, so those actions were not verified.
+ * Pricing semantics need clarification; mobile was not reviewed.
  */
 for (const testPlatform of testPlatforms) {
   test.describe(

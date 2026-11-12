@@ -7,22 +7,13 @@ import { PriceHelper } from '../../../src/helpers/priceHelper.js';
 import { categoryData } from '../../../src/data/categoryData.js';
 
 /**
- * Documents the expected keyboard/clipboard behavior and failures observed on November 12, 2026.
- *
- * UI investigation found that a trailing dot key leaves the integer unchanged, while a comma key
- * clears the populated field. These observations were adopted as expected behavior.
- * Pasted decimals must be rejected safely, preserving the other bound and category results.
- * HTTP 422 followed by a not-found page remains a failing regression.
- *
- * Recorded failures (amounts are diagnostic examples, not fixed test data):
- * - WEB-00044/MOB-00044: pasted min 849.5 caused HTTP 422 ("Price from must be an integer.") and not-found UI.
- * - WEB-00045/MOB-00045: pasted max 8353.5 caused HTTP 422 ("Price to must be an integer.") and not-found UI.
- *   Both pairs failed because the edited field disappeared instead of being cleared safely.
- * - WEB-00031/MOB-00031, WEB-00039/MOB-00039 and WEB-00047/MOB-00047 passed input checks, then failed
- *   because a current UI price of 10473 exceeded the selected maximum of 8354.
- * - WEB-00029/MOB-00029 and WEB-00046/MOB-00046 failed on the same 10473 > 8354 price violation with min cleared.
- * - WEB-00037/MOB-00037 passed comma-key checks, then failed during valid-input recovery:
- *   a current UI price of 1350 was below the replacement range's minimum of 2405.
+ * Earlier desktop/mobile run (2026-11-12): 0 passed, 16 failed.
+ * Observed keyboard behavior adopted as expected: trailing dot preserves the integer; comma clears its field.
+ * WEB/MOB IDs:
+ * - 00044, 00045: dot paste caused HTTP 422/not-found instead of safe rejection.
+ * - 00029, 00031, 00039, 00046, 00047: UI price 10473 exceeded max 8354 after input checks.
+ * - 00037: recovery returned price 1350 below min 2405.
+ * Amounts describe that run, not fixed test data.
  */
 const keyboardSeparatorCases: readonly PriceDecimalInputTestCase[] = [
   {

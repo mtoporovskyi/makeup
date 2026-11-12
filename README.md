@@ -4,6 +4,8 @@ TypeScript and Playwright E2E tests for the Ukrainian perfume category on makeup
 
 ## Setup
 
+**Browser:** Playwright-managed Chromium for both desktop and mobile viewport projects.
+
 Requires Node.js **22.14+ within 22.x**, npm, and access to makeup.com.ua. Use `nvm use` to select the version in `.nvmrc` if you use nvm.
 
 ```bash
