@@ -1,0 +1,42 @@
+name: Playwright tests
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  playwright-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version-file: .nvmrc
+      - name: Lint
+        run: |
+          npm ci
+          npm run lint
+      - name: Run Playwright tests
+        run: |
+          npx playwright install --with-deps chromium
+          npm test
+      - name: Set artifact creation time
+        if: ${{ always() }}
+        id: artifact
+        run: echo "created-at=$(TZ=Europe/Kyiv date +'%Y-%m-%d_%H-%M-%S')" >> "$GITHUB_OUTPUT"
+      - name: Upload Playwright artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: playwright-results-${{ steps.artifact.outputs.created-at }}-kyiv
+          path: |
+            playwright-report/
+            reports/
+          retention-days: 7
+          if-no-files-found: warn
